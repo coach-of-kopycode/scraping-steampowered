@@ -47,9 +47,11 @@ def parse(data):
             # replace empty values to 'none'
             if released == '':
                 released = 'none'
-            elif price == '':
+
+            if price == '':
                 price = 'none'
-            elif discount == '':
+
+            if discount == '':
                 discount = 'none'
 
             # sorting data
