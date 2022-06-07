@@ -1,13 +1,13 @@
+import os
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 import json
-import csv
 
 
 # get data from website
-def get_data():
-    keyword = input('Input your keyword : ')
-    url = 'https://store.steampowered.com/search/?term={}'.format(keyword)
+def get_data(name):
+    url = 'https://store.steampowered.com/search/?term={}'.format(name)
 
     response = requests.get(url)
     return response.text
@@ -79,11 +79,18 @@ def output(datas: list):
         print('0 results match your search.')
 
 
-def run():
-    data = get_data()
+def generate_file(result, filename):
+    df = pd.DataFrame(result)
+    df.to_excel(f'{filename}.xlsx', index=False)
+
+
+def run(game):
+    data = get_data(game)
     result = parse(data)
+    generate_file(result, game)
     output(result)
 
 
 if __name__ == '__main__':
-    run()
+    keyword = input('Input your keyword : ')
+    run(keyword)
