@@ -87,7 +87,10 @@ def generate_file(result, filename):
 def run(game):
     data = get_data(game)
     result = parse(data)
-    generate_file(result, game)
+
+    if result is not None:
+        generate_file(result, game)
+
     output(result)
 
 
