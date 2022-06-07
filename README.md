@@ -1,6 +1,6 @@
 # Scraping Steam
 
-__Want to be collect some data such as prices, 
+__Want to collect some data such as prices, 
 discounts, releases,etc from the list of games?__
 
 Cool, this project will help you to take 
