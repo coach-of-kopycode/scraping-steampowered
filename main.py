@@ -6,15 +6,15 @@ import json
 
 
 # get data from website
-def get_data(name):
-    url = 'https://store.steampowered.com/search/?term={}'.format(name)
+def get_data(game):
+    url = 'https://store.steampowered.com/search/?term={}'.format(game)
 
     response = requests.get(url)
     return response.text
 
 
 # processing data
-def parse(data):
+def parse(filename, data):
     # declaration variable
     result = []
     title = None
@@ -65,6 +65,11 @@ def parse(data):
 
             # append
             result.append(data_dict)
+
+        # writing json
+        with open(f'result/{filename}.json', 'w') as jsonfile:
+            json.dump(result, jsonfile)
+
         return result
     else:
         return None
@@ -79,14 +84,15 @@ def output(datas: list):
         print('0 results match your search.')
 
 
+# generate file to excel format
 def generate_file(result, filename):
     df = pd.DataFrame(result)
-    df.to_excel(f'{filename}.xlsx', index=False)
+    df.to_excel(f'result/{filename}.xlsx', index=False)
 
 
 def run(game):
     data = get_data(game)
-    result = parse(data)
+    result = parse(game, data)
 
     if result is not None:
         generate_file(result, game)
@@ -96,4 +102,9 @@ def run(game):
 
 if __name__ == '__main__':
     keyword = input('Input your keyword : ')
+
+    # create directory
+    if not os.path.exists('result'):
+        os.mkdir('result')
+
     run(keyword)
