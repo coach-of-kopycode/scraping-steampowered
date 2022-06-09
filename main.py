@@ -67,7 +67,7 @@ def parse(filename, data):
             result.append(data_dict)
 
         # writing json
-        with open(f'result/{filename}.json', 'w') as jsonfile:
+        with open(f'result/{filename}.json', 'w+') as jsonfile:
             json.dump(result, jsonfile)
 
         return result
